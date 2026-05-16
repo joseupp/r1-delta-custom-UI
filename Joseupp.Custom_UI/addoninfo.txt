@@ -1,0 +1,9 @@
+"AddonInfo"
+{
+	"addontitle"			"Custom UI"
+	"addonDescription"		"Adds custom privatematch lobby"
+	"addonversion"			"2.0.1"
+	"addonauthor"			"Joseupp"
+
+	"addonContent_Script"	"1"
+}
