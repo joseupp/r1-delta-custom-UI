@@ -36,14 +36,15 @@ function ShouldShowEOGMapStars()
 	if ( lastMode == null )
 		return false
 
-	if ( GetModeNameForEnum( level.ui.privatematch_mode ) == "scv" )	
-        return false
+	// if ( GetModeNameForEnum( level.ui.privatematch_mode ) == "scv" )	
+    //     return false
 
-	if ( GetPersistentVar( "savedScoreboardData.privateMatch" ) == true && GetConVarBool( "hide_server" ) == false )
-		return false
+	if ( GetPersistentVar( "savedScoreboardData.privateMatch" ) == true )
+		return true
 		
-    if ( GetConVarBool( "hide_server" ) == true )
-	    return true
+    // if ( GetConVarBool( "hide_server" ) == true )
+	//     return true
+	
 	// Also only show it if the users stars for that map and mode changed
 
 	local starCounts = GetStarsForScores( lastMap, lastMode )

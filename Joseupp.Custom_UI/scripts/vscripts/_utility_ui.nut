@@ -510,6 +510,8 @@ function GetMapStarScoreImage( gameMode )
 			return SCOREBOARD_MATERIAL_MARKED_FOR_DEATH_TARGET_KILLS
 		case "coop":
 			return SCOREBOARD_MATERIAL_VICTORY_CONTRIBUTION
+		case "scv":
+			return SCOREBOARD_MATERIAL_VICTORY_CONTRIBUTION	
 		default:
 			Assert( 0 , "Unhandled game mode for map stars" )
 	}

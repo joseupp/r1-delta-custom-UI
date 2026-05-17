@@ -580,11 +580,15 @@ function ToggleHideServer( button )
 	value = !value
 
 	if ( value )
+	{
 	    ClientCommand( "hide_server 1" )
+		EmitUISound( "PlayerJoinedLobby" )		
+	}
 	else
+	{
 		ClientCommand( "hide_server 0" )
-
-	EmitUISound( "Menu.Accept" )
+		EmitUISound( "Menu.deny" )		
+	}
 
 	UpdateFooterButtons()
 

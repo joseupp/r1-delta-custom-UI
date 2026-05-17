@@ -1142,11 +1142,20 @@ function SetDisplayedMapByComboIndex( index )
 		ClearDisplayedMapAndMode()
 		return
 	}
-	if ( IsPrivateMatch() && GetConVarBool( "hide_server" ) == false )
+	if ( IsPrivateMatch() )
 	{
-	    local mapName = GetPrivateMatchMapNameForEnum( level.ui.privatematch_map )
-	    local gameMode = GetModeNameForEnum( level.ui.privatematch_mode )
-		SetDisplayedMapAndMode( mapName, gameMode )
+		if( GetConVarBool( "hide_server" ) == false )
+		{
+            local mapName = GetPrivateMatchMapNameForEnum( level.ui.privatematch_map )
+	        local gameMode = GetModeNameForEnum( level.ui.privatematch_mode )
+		    SetDisplayedMapAndMode( mapName, gameMode )
+		}
+		else
+		{
+			local mapName = GetCurrentPlaylistMapByIndex( index )
+	        local gameMode = GetModeNameForEnum( level.ui.privatematch_mode )
+	        SetDisplayedMapAndMode( mapName, gameMode )
+		}
 	}
     else 
 	{
@@ -1273,14 +1282,10 @@ function UpdatePrivateMatchButtons()
 	if ( GetConVarBool( "hide_server" ) == false && level.ui.privatematch_starting != ePrivateMatchStartState.STARTING)
     {
 	    mapsButton.SetEnabled( true )
-		modesButton.SetEnabled( true )
-		settingsButton.SetEnabled( true )
 	}
 	else
 	{
         mapsButton.SetEnabled( false )
-		modesButton.SetEnabled( false )
-		settingsButton.SetEnabled( false )
     }
 
 	if ( level.ui.privatematch_starting == ePrivateMatchStartState.NOT_READY )
@@ -1577,35 +1582,47 @@ function UpdateLobbyTitle()
 		if ( GetLobbyTypeScript() == eLobbyType.MATCH )
 			text = GetCurrentPlaylistVar( "lobbytitle" )
 
-		else if ( GetLobbyTypeScript() == eLobbyType.PRIVATE_MATCH && currentHideServer == true ) 
-			text = GetCurrentPlaylistVar( "lobbytitle" )
-		
-		else if ( GetLobbyTypeScript() == eLobbyType.PRIVATE_MATCH && currentHideServer == false )
+		if ( GetLobbyTypeScript() == eLobbyType.PRIVATE_MATCH ) 
 		{
-			// if ( GetModeNameForEnum( level.ui.privatematch_mode ) == "at" )
-            //     text = "#PL_attrition_lobby"
-			// else if ( GetModeNameForEnum( level.ui.privatematch_mode ) == "coop" )
-            //     text = "#PL_coop_lobby"
-			// else if ( GetModeNameForEnum( level.ui.privatematch_mode ) == "campaign_carousel" )
-            //     text = "#PL_campaign_lobby"
-			// else if ( GetModeNameForEnum( level.ui.privatematch_mode ) == "cp" )
-            //     text = "#PL_hardpoint_lobby"
-			// else if ( GetModeNameForEnum( level.ui.privatematch_mode ) == "ctf" )
-            //     text = "#PL_capture_the_flag_lobby"
-			// else if ( GetModeNameForEnum( level.ui.privatematch_mode ) == "lts" )
-            //     text = "#PL_last_titan_standing_lobby"
-			// else if ( GetModeNameForEnum( level.ui.privatematch_mode ) == "wlts" )
-            //     text = "#PL_wingman_lts_lobby"
-			// else if ( GetModeNameForEnum( level.ui.privatematch_mode ) == "mfd" )
-            //     text = "#PL_marked_for_death_lobby"
-			// else if ( GetModeNameForEnum( level.ui.privatematch_mode ) == "mfdp" )
-            //     text = "#PL_marked_for_death_pro_lobby"
-			// else if ( GetModeNameForEnum( level.ui.privatematch_mode ) == "ps" )
-            //     text = "#PL_pilot_skirmish_lobby"
-			// else if ( GetModeNameForEnum( level.ui.privatematch_mode ) == "tdm" )
-            //     text = "#PL_pilot_hunter_lobby"
-			// else
-			    text = "#PRIVATE_MATCH"
+			if ( currentHideServer == false )
+			{
+                text = "#PRIVATE_MATCH"
+			}
+			else
+			{
+    			if ( GetModeNameForEnum( level.ui.privatematch_mode ) == "at" )
+                    text = "#PL_attrition_lobby"
+    			else if ( GetModeNameForEnum( level.ui.privatematch_mode ) == "coop" )
+                    text = "#PL_coop_lobby"
+    			else if ( GetModeNameForEnum( level.ui.privatematch_mode ) == "campaign_carousel" )
+                    text = "#PL_campaign_lobby"
+    			else if ( GetModeNameForEnum( level.ui.privatematch_mode ) == "cp" )
+                    text = "#PL_hardpoint_lobby"
+    			else if ( GetModeNameForEnum( level.ui.privatematch_mode ) == "ctf" )
+                    text = "#PL_capture_the_flag_lobby"
+    			else if ( GetModeNameForEnum( level.ui.privatematch_mode ) == "lts" )
+                    text = "#PL_last_titan_standing_lobby"
+    			else if ( GetModeNameForEnum( level.ui.privatematch_mode ) == "wlts" )
+                    text = "#PL_wingman_lts_lobby"
+    			else if ( GetModeNameForEnum( level.ui.privatematch_mode ) == "mfd" )
+                    text = "#PL_marked_for_death_lobby"
+    			else if ( GetModeNameForEnum( level.ui.privatematch_mode ) == "mfdp" )
+                    text = "#PL_marked_for_death_pro_lobby"
+    			else if ( GetModeNameForEnum( level.ui.privatematch_mode ) == "ps" )
+                    text = "#PL_pilot_skirmish_lobby"
+    			else if ( GetModeNameForEnum( level.ui.privatematch_mode ) == "tdm" )
+                    text = "#PL_pilot_hunter_lobby"
+    			else if ( GetModeNameForEnum( level.ui.privatematch_mode ) == "scv" )
+    			    text = "#PL_scavenger_lobby"
+				else if ( GetModeNameForEnum( level.ui.privatematch_mode ) == "ttdm" )
+    			    text = "#PL_titan_brawl_lobby"
+				else if ( GetModeNameForEnum( level.ui.privatematch_mode ) == "tmfd" )
+    			    text = "#PL_titan_mfd_lobby"
+				else if ( GetModeNameForEnum( level.ui.privatematch_mode ) == "tmfdp" )
+    			    text = "#PL_titan_mfdp_lobby"			
+    			else
+    			    text = "#PRIVATE_MATCH"
+			}
 		}
 		else
 			text = "#PRIVATE_LOBBY"
@@ -1844,17 +1861,9 @@ function UpdateLobbyType()
 	    	}
 	    	else
 	    	{
+				ClearDisplayedMapAndMode()
 	    		Privatematch_map_Changed()
 	    		Privatematch_mode_Changed()
-		        file.starsLabelGamepad.Hide()
-		        file.starsLabelKeyboard.Hide()
-		        file.star1.Hide()
-		        file.star2.Hide()
-		        file.star3.Hide()
-		        file.mapStarsPanel.Hide()
-		        file.winStreakHeader.Hide()
-		        file.lastTenLabel.Hide()
-		        file.winStreakLabel.Hide()
 				UpdatePrivateMatchButtons()
 	    	}
     

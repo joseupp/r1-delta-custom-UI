@@ -153,11 +153,13 @@ function MapButton_Focused( button )
 		nextMapDesc.SetText( GetMapDisplayDesc( mapName ) )
 	}
 
-	// if ( !IsPrivateMatch() )
-	// {
+	if ( IsPrivateMatch() )
+	{
+		local gameMode = GetModeNameForEnum( level.ui.privatematch_mode )
+
 		file.starsLabel.Show()
-		UpdateSelectedMapStarData( menu, mapName, "coop" )
-	// }
+		UpdateSelectedMapStarData( menu, mapName, gameMode )
+	}
 
 	// Update window scrolling if we highlight a map not in view
 	local minScrollState = clamp( buttonID - (MAP_LIST_VISIBLE_ROWS - 1), 0, file.numMapButtonsOffScreen )
