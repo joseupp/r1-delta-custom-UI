@@ -1,4 +1,4 @@
-Custom private match with map rotation in Attrition and Domination modes, compatible with Aphelion's Frontier Overhaul. 
+Custom private match with map rotation, compatible with Aphelion's Frontier Overhaul. 
 
 it is recommended for full compatibility to delete the files from the Aphelions.Frontier_Overhaul folder "menu_map_select.nut" and "_lobby.nut"
 
