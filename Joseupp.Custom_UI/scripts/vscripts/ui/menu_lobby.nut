@@ -415,9 +415,9 @@ function OnOpenLobbyMenu()
 	if ( IsPrivateMatch() && GetConVarBool( "hide_server" ) == false )
 	{
         Privatematch_map_Changed()
-	    Privatematch_mode_Changed()
+		Privatematch_mode_Changed()
 	}
-
+	
 	CoopLobbyMap_Changed()
 	ListenHostUsernameHash_Changed()
 
@@ -966,7 +966,7 @@ function ShouldShowRankInfo( mapName, gameMode )
 function SetStarInfo( mapName, gameMode )
 {
 	local shouldShowMapStars = true
-	if ( mapName == null || gameMode == null || IsPrivateMatch() && !IsDelta() )
+	if ( mapName == null || gameMode == null )
 		shouldShowMapStars = false
 	else if ( gameMode != null )
 	{
@@ -974,6 +974,7 @@ function SetStarInfo( mapName, gameMode )
 			shouldShowMapStars = false
 		if ( GetConVarBool( "hide_server" ) == false )	
 		    shouldShowMapStars = false
+
 	}
 
 	if ( !shouldShowMapStars )
@@ -1117,6 +1118,7 @@ function ClearDisplayedMapAndMode()
 	SetStreakInfo( false )
 	UpdateFooterButtons()
 }
+Globalize( ClearDisplayedMapAndMode )
 
 function SetDisplayedMapAndMode( mapName, gameMode )
 {
@@ -1279,14 +1281,14 @@ function UpdatePrivateMatchButtons()
 		settingsButton.SetEnabled( true )
 	}
 
-	if ( GetConVarBool( "hide_server" ) == false && level.ui.privatematch_starting != ePrivateMatchStartState.STARTING)
-    {
-	    mapsButton.SetEnabled( true )
-	}
-	else
-	{
-        mapsButton.SetEnabled( false )
-    }
+	// if ( GetConVarBool( "hide_server" ) == false && level.ui.privatematch_starting != ePrivateMatchStartState.STARTING)
+    // {
+	//     mapsButton.SetEnabled( true )
+	// }
+	// else
+	// {
+    //     mapsButton.SetEnabled( false )
+    // }
 
 	if ( level.ui.privatematch_starting == ePrivateMatchStartState.NOT_READY )
 		startMatchButton.SetLocked( true )
@@ -1584,12 +1586,12 @@ function UpdateLobbyTitle()
 
 		if ( GetLobbyTypeScript() == eLobbyType.PRIVATE_MATCH ) 
 		{
-			if ( currentHideServer == false )
-			{
-                text = "#PRIVATE_MATCH"
-			}
-			else
-			{
+			// if ( currentHideServer == false )
+			// {
+            //     text = "#PRIVATE_MATCH"
+			// }
+			// else
+			// {
     			if ( GetModeNameForEnum( level.ui.privatematch_mode ) == "at" )
                     text = "#PL_attrition_lobby"
     			else if ( GetModeNameForEnum( level.ui.privatematch_mode ) == "coop" )
@@ -1622,7 +1624,7 @@ function UpdateLobbyTitle()
     			    text = "#PL_titan_mfdp_lobby"			
     			else
     			    text = "#PRIVATE_MATCH"
-			}
+			// }
 		}
 		else
 			text = "#PRIVATE_LOBBY"
@@ -1679,7 +1681,7 @@ function UpdateLobbyTypeButtons( menu, type )
 	enableList[eLobbyType.PARTY_LEADER] <- [ bigPlayButton1, privateMatchButton, statsButton, challengesButton, regenButton, rankedButton ]
 	enableList[eLobbyType.MATCH] <- [ editPilotLoadoutsButton, statsButton, challengesButton, regenButton, rankedButton ]
 	enableList[eLobbyType.PARTY_MEMBER] <- [ editPilotLoadoutsButton, statsButton, challengesButton, regenButton, rankedButton ]
-	enableList[eLobbyType.PRIVATE_MATCH] <- [ editPilotLoadoutsButton, startMatchButton, mapsButton, modesButton, settingsButton, /*challengesButton*/  ]
+	enableList[eLobbyType.PRIVATE_MATCH] <- [ editPilotLoadoutsButton, startMatchButton, mapsButton, modesButton, challengesButton, settingsButton ]
 
 	local disableList = []
 
@@ -1857,14 +1859,13 @@ function UpdateLobbyType()
 	    	if ( currentHideServer == true )
 	    	{
 	    		NextMapModeComboIndex_Changed()
-	    		UpdatePrivateMatchButtons()
+	    		//UpdatePrivateMatchButtons()
 	    	}
 	    	else
 	    	{
 				ClearDisplayedMapAndMode()
 	    		Privatematch_map_Changed()
 	    		Privatematch_mode_Changed()
-				UpdatePrivateMatchButtons()
 	    	}
     
 	    	lastHideServer = currentHideServer

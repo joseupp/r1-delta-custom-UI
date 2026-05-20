@@ -570,19 +570,7 @@ resource/ui/menus/lobby.menu
 			navRight				ListFriendlies
 			labelText				"#STATS_BUTTON_TEXT"
 		}
-		BtnChallenges
-		{
-			ControlName				BaseModHybridButton
-			InheritProperties		CompactButton
-			pin_to_sibling			BtnStats
-			pin_corner_to_sibling	0
-			pin_to_sibling_corner	2
-			zpos 					900
-			navUp					BtnStats
-			navDown					BtnOptions
-			navRight				ListFriendlies
-			labelText				"#MENU_CHALLENGES"
-		}
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -612,6 +600,19 @@ resource/ui/menus/lobby.menu
 			navRight				ListFriendlies
 			labelText				"#REGEN"
 		}
+		BtnChallenges
+		{
+			ControlName				BaseModHybridButton
+			InheritProperties		CompactButton
+			pin_to_sibling			BtnStats
+			pin_corner_to_sibling	0
+			pin_to_sibling_corner	2
+			zpos 					900
+			navUp					BtnStats
+			navDown					BtnOptions
+			navRight				ListFriendlies
+			labelText				"#MENU_CHALLENGES"
+		}		
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

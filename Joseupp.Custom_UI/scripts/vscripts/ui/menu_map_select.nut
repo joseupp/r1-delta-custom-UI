@@ -37,6 +37,9 @@ function InitMapsMenu()
 
 function OnOpenMapsMenu()
 {
+	ClientCommand( "hide_server 0" )
+	ClearDisplayedMapAndMode()
+
 	local buttons = file.buttons
 	local mapsArray = GetPrivateMatchMaps()
 

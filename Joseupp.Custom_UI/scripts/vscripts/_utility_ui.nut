@@ -80,7 +80,7 @@ function GetLobbyBackgroundImage()
 	if ( (GetLobbyTypeScript() == eLobbyType.MATCH) )
 		image = GetMatchLobbyBackground()
 
-	if ( ( GetLobbyTypeScript() == eLobbyType.PRIVATE_MATCH ) && GetConVarBool( "hide_server" ) == true )	
+	if ( ( GetLobbyTypeScript() == eLobbyType.PRIVATE_MATCH ) /*&& GetConVarBool( "hide_server" ) == true */)	
     {
 	    if ( GetTeam() == TEAM_IMC )
             image = LOBBY_BACKGROUND_IMC

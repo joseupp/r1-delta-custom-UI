@@ -47,7 +47,7 @@ function main()
 	Globalize( GetPartyLeaders )
 	Globalize( ClearAllNewItems )
 	Globalize( PrintServerGameHistory )
-
+    
 	if ( developer() )
 		Globalize( Lobby_PickNextMapModeCombo )
 
@@ -491,9 +491,9 @@ for ( ;; )
 		WaitEndFrame() // allow the thread that is updating file.teamReady to do it's updates
 
 		if ( file.nextMapModeCombo.index == null && GetConVarBool( "hide_server" ) == true )
-        {
             SelectNextMap()
-        }
+		if ( file.nextMapModeCombo.index != null && GetConVarBool( "hide_server" ) == false )
+		    ClearNextMap()
 
 		if ( level.ui.privatematch_starting == ePrivateMatchStartState.STARTING && level.ui && file.teamReady[TEAM_IMC] && file.teamReady[TEAM_MILITIA] && mapName && modeName )
 		{
@@ -549,7 +549,7 @@ for ( ;; )
 	else 
 	{
 		if ( GetConVarBool( "hide_server" ) == true )
-            GameRules_ChangeMap( file.nextMapModeCombo.mapName, modeName )		
+            GameRules_ChangeMap( file.nextMapModeCombo.mapName, modeName )
 		else
 		    GameRules_ChangeMap( mapName, modeName )
 	}

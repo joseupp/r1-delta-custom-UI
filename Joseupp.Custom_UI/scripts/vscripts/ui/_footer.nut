@@ -205,19 +205,19 @@ function UpdateFooterButtons( menuName = null )
 				footerData.gamepad.append( { label = "#B_BUTTON_LEAVE" } )
 				footerData.pc.append( { label = "#LEAVE", func = PCBackButton_Activate } )
 
-				if ( IsFullyConnected() && !IsPrivateMatch() && level.ui.nextMapModeComboIndex != null )
+				if ( IsFullyConnected() /*&& !IsPrivateMatch() */&& level.ui.nextMapModeComboIndex != null && GetConVarBool( "hide_server" ) == true )
 				{
 					local gameMode = GetCurrentPlaylistGamemodeByIndex( level.ui.nextMapModeComboIndex )
 					if (  PersistenceEnumValueIsValid( "gameModesWithStars", gameMode ) )
 					{
 						if ( uiGlobal.starsPanelVisible )
 						{
-							footerData.gamepad.append( { label = "#Y_BUTTON_HIDE_STARS" } )
+							//footerData.gamepad.append( { label = "#Y_BUTTON_HIDE_STARS" } )
 							footerData.pc.append( { label = "#HIDE_STARS", func = ViewStarsButton_Activated } )
 						}
 						else
 						{
-							footerData.gamepad.append( { label = "#Y_BUTTON_VIEW_STARS" } )
+							//footerData.gamepad.append( { label = "#Y_BUTTON_VIEW_STARS" } )
 							footerData.pc.append( { label = "#VIEW_STARS", func = ViewStarsButton_Activated } )
 						}
 					}
@@ -259,6 +259,17 @@ function UpdateFooterButtons( menuName = null )
 
 			if ( GetConVarInt( "sv_lobbyType" ) == 0 )
 			{
+				if ( GetConVarBool( "hide_server" ) && AmIPartyLeader() )
+				{
+					footerData.gamepad.append( { label = "#HIDE_SERVER_GAMEPAD" } )
+					footerData.pc.append( { label = "#HIDE_SERVER", func = ToggleHideServer } )
+				}
+				else if ( AmIPartyLeader() )
+				{
+					footerData.gamepad.append( { label = "#SHOW_SERVER_GAMEPAD" } )
+					footerData.pc.append( { label = "#SHOW_SERVER", func = ToggleHideServer } )
+				}
+
 				if ( GetPersistentVar( "delta.everythingUnlocked") )
 				{
 					footerData.gamepad.append( { label = "#DISABLE_EVERYTHINGUNLOCKED_GAMEPAD" } )
@@ -275,13 +286,13 @@ function UpdateFooterButtons( menuName = null )
 
 			if ( uiGlobal.playerListFocused )
 			{
-				footerData.gamepad.append( { label = "#X_BUTTON_MUTE" } )
-				footerData.pc.append( { label = "#MOUSE1_MUTE" } )
+				//footerData.gamepad.append( { label = "#X_BUTTON_MUTE" } )
+				//footerData.pc.append( { label = "#MOUSE1_MUTE" } )
 
 				// footerData.pc.append( { label = "#MOUSE2_VIEW_PLAYER_PROFILE" } )
 			}
 
-			footerData.gamepad = AppendGamepadInviteLabels( footerData.gamepad )
+			//footerData.gamepad = AppendGamepadInviteLabels( footerData.gamepad )
 			break
 
 		case "ImageWalkThroughMenu":
@@ -582,12 +593,12 @@ function ToggleHideServer( button )
 	if ( value )
 	{
 	    ClientCommand( "hide_server 1" )
-		EmitUISound( "PlayerJoinedLobby" )		
+		EmitUISound( "EOGSummary.XPTotalPopup" )		
 	}
 	else
 	{
 		ClientCommand( "hide_server 0" )
-		EmitUISound( "Menu.deny" )		
+		EmitUISound( "EOGSummary.XPBreakdownPopup" )		
 	}
 
 	UpdateFooterButtons()
@@ -796,13 +807,13 @@ function UpdatePrivateMatchSwitchTeams()
 		{
 			if ( IsPrivateMatch() )
 			{
-				RegisterButtonPressedCallback( BUTTON_BACK, PrivateMatchSwitchTeams )
+				RegisterButtonPressedCallback( BUTTON_X, PrivateMatchSwitchTeams )
 				//RegisterButtonPressedCallback( BUTTON_START, ToggleHideServer )
 				//RegisterButtonPressedCallback( BUTTON_START, ToggleProgression )
 			}
 			else
 			{
-				DeregisterButtonPressedCallback( BUTTON_BACK, PrivateMatchSwitchTeams )
+				DeregisterButtonPressedCallback( BUTTON_X, PrivateMatchSwitchTeams )
 				//DeregisterButtonPressedCallback( BUTTON_START, ToggleHideServer )
 				//DeregisterButtonPressedCallback( BUTTON_START, ToggleProgression )
 			}
@@ -867,13 +878,13 @@ function SwitchProgression()
 		{
 			if ( uiGlobal.canSetDataCenter )
 			{
-				RegisterButtonPressedCallback(BUTTON_TRIGGER_RIGHT, ToggleProgression )
-				RegisterButtonPressedCallback( BUTTON_START, ToggleHideServer )
+				RegisterButtonPressedCallback( BUTTON_TRIGGER_RIGHT, ToggleProgression )
+				RegisterButtonPressedCallback( BUTTON_TRIGGER_LEFT, ToggleHideServer )
 			}
 			else
 			{
-				DeregisterButtonPressedCallback(BUTTON_TRIGGER_RIGHT, ToggleProgression )
-				DeregisterButtonPressedCallback( BUTTON_START, ToggleHideServer )
+				DeregisterButtonPressedCallback( BUTTON_TRIGGER_RIGHT, ToggleProgression )
+				DeregisterButtonPressedCallback( BUTTON_TRIGGER_LEFT, ToggleHideServer )
 			}
 		}
 
